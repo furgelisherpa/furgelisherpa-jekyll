@@ -1,0 +1,124 @@
+{%- comment -%}
+  Site <head>.
+
+  Every value read from config has a `| default:` fallback so the theme
+  builds with a near-empty _config.yml. Element order intentionally
+  mirrors the reference site markup: charset, viewport, description,
+  title, robots/canonical, author, og:*, twitter:card, font, stylesheet,
+  favicon, JSON-LD.
+
+  `page.layout` is not visible from inside an include (layout front matter
+  belongs to the layout, not the page), so the noindex check for the
+  not-found layout tests the layout *name* that the page declares.
+{%- endcomment -%}
+
+{%- assign site_name = site.site_name | default: site.title -%}
+{%- assign author_name = site.author.name | default: site.title -%}
+{%- assign page_description = page.description | default: site.description -%}
+
+{%- if page.title_tag -%}
+  {%- assign page_title = page.title_tag -%}
+{%- elsif page.title and site_name -%}
+  {%- assign page_title = page.title | append: " - " | append: site_name -%}
+{%- else -%}
+  {%- assign page_title = site_name -%}
+{%- endif -%}
+
+{%- assign noindex = page.noindex -%}
+{%- if page.layout == "not-found" -%}
+  {%- assign noindex = true -%}
+{%- endif -%}
+
+{%- if page.og_type -%}
+  {%- assign og_type = page.og_type -%}
+{%- elsif page.layout == "post" -%}
+  {%- assign og_type = "article" -%}
+{%- else -%}
+  {%- assign og_type = "website" -%}
+{%- endif -%}
+
+{%- assign css_path = site.css_path | default: "/assets/css/style.css" -%}
+
+{%- assign favicon = site.favicon | default: "/assets/favicon.jpg" -%}
+{%- assign favicon_ext = favicon | split: "." | last | downcase -%}
+{%- case favicon_ext -%}
+  {%- when "jpg", "jpeg" -%}{%- assign favicon_type = "image/jpeg" -%}
+  {%- when "png" -%}{%- assign favicon_type = "image/png" -%}
+  {%- when "svg" -%}{%- assign favicon_type = "image/svg+xml" -%}
+  {%- when "ico" -%}{%- assign favicon_type = "image/x-icon" -%}
+  {%- when "gif" -%}{%- assign favicon_type = "image/gif" -%}
+  {%- else -%}{%- assign favicon_type = "" -%}
+{%- endcase -%}
+
+{%- comment -%} Three states matter: unset (nil) falls back to the bundled
+family, an explicitly blank or false value omits the link entirely, and any
+other value is used as the family name. `| default:` cannot express this
+because it treats "" as missing. {%- endcomment -%}
+{%- if site.google_font == nil -%}
+  {%- assign google_font = "JetBrains Mono" -%}
+{%- else -%}
+  {%- assign google_font = site.google_font -%}
+{%- endif -%}
+
+{%- assign same_as = "" -%}
+{%- if site.author.social -%}
+  {%- assign social_count = site.author.social | size -%}
+  {%- if social_count > 0 -%}
+    {%- assign same_as = site.author.social | jsonify -%}
+  {%- endif -%}
+{%- endif -%}
+
+{%- comment -%}
+  Jekyll gives an HTML page an extensionless page.url (`/about`) and only
+  appends the extension when writing the file, so `absolute_url page.url` alone
+  would advertise a URL that does not exist. Restore the output extension,
+  leaving explicit permalinks (already ending in .html) and directory URLs
+  (pretty permalinks, ending in /) alone.
+{%- endcomment -%}
+{%- assign canonical_url = page.url | default: "" -%}
+{%- assign canonical_ext = canonical_url | slice: -5, 5 -%}
+{%- assign canonical_slash = canonical_url | slice: -1, 1 -%}
+{%- if canonical_url != "" and canonical_ext != ".html" and canonical_slash != "/" -%}
+  {%- assign canonical_url = canonical_url | append: ".html" -%}
+{%- endif -%}
+{%- assign canonical_url = canonical_url | absolute_url -%}
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="{{ page_description | escape }}" />
+  <title>{{ page_title | escape }}</title>
+  {%- if noindex %}
+  <meta name="robots" content="noindex" />
+  {%- else %}
+  <link rel="canonical" href="{{ canonical_url }}" />
+  {%- endif %}
+  <meta name="author" content="{{ author_name | escape }}" />
+  {%- unless noindex %}
+  <meta property="og:type" content="{{ og_type }}" />
+  <meta property="og:site_name" content="{{ site_name | escape }}" />
+  <meta property="og:title" content="{{ page_title | escape }}" />
+  <meta property="og:description" content="{{ page_description | escape }}" />
+  <meta property="og:url" content="{{ canonical_url }}" />
+  <meta name="twitter:card" content="summary" />
+  {%- endunless %}
+  {%- if google_font and google_font != "" %}
+  <link
+    href="https://fonts.googleapis.com/css2?family={{ google_font | replace: " ", "+" }}&display=swap"
+    rel="stylesheet"
+  />
+  {%- endif %}
+  <link href="{{ css_path | relative_url }}" rel="stylesheet" />
+  <link href="{{ favicon | relative_url }}" rel="icon" type="{{ favicon_type }}" />
+  {%- if page.jsonld %}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": {{ author_name | default: "" | jsonify | replace: "</", "<\/" }},
+      "url": {{ site.url | default: "" | jsonify | replace: "</", "<\/" }}{% if same_as != "" %},
+      "sameAs": {{ same_as | replace: "</", "<\/" }}{% endif %}
+    }
+  </script>
+  {%- endif %}
+</head>

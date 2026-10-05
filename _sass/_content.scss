@@ -1,0 +1,20 @@
+@use "variables";
+
+h2 { font-size: 1rem; margin: 1.5rem 0 .4rem; text-decoration: underline; }
+p { margin: 0 0 .75rem; }
+ul { margin: 0 0 .75rem; padding-left: 1.4rem; }
+li { margin: .2rem 0; }
+pre {
+  border: 1px solid variables.$color-black; border-radius: 6px;
+  padding: .6rem .8rem; overflow-x: auto; margin: 0 0 1rem;
+  background: variables.$color-code-block-bg; font-family: inherit; font-size: .88rem;
+}
+code { font-family: inherit; background: variables.$color-code-inline-bg; padding: 0 .2rem; }
+pre code { background: none; padding: 0; }
+blockquote { margin: 0 0 1rem; padding-left: .9rem; border-left: 3px solid variables.$color-black; }
+table { border-collapse: collapse; margin: 0 0 1rem; max-width: 100%; display: block; overflow-x: auto; }
+th, td { border: 1px solid variables.$color-black; padding: .3rem .6rem; text-align: left; }
+hr { border: 0; border-top: 1px solid variables.$color-black; margin: 1.5rem 0; }
+img { max-width: 100%; height: auto; }
+
+@media (max-width: 600px) { body { font-size: 0.9rem; padding: .75rem; } h1 { font-size: 1.25rem; } }

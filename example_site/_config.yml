@@ -1,0 +1,120 @@
+# Demonstration site for the furgelisherpa-jekyll theme.
+#
+# Every key the theme reads is documented below with its default, so this file
+# doubles as a copy-paste starting point. Keys are grouped roughly the way they
+# appear in the rendered <head>.
+
+# --- Site identity -----------------------------------------------------------
+
+# Site title. Used as a fallback for `site_name`, `author.name` and the
+# auto-generated footer text. No default.
+title: "Example Site"
+
+# Separate display name for og:site_name and the <title> suffix. Falls back to
+# `title` when unset. No default.
+site_name: "Example Site"
+
+# Meta description fallback for pages that do not set their own `description`.
+# Also used for og:description. No default.
+description: "A minimal demonstration site for the furgelisherpa-jekyll theme."
+
+# Absolute origin of the deployed site, with no trailing slash and no
+# `baseurl`. Used to build canonical URLs, og:url and the JSON-LD `url`.
+# No default -- set it to your own origin.
+url: "https://example.com"
+
+# Subpath the site is served from, e.g. "/blog". Leave empty or omit for a site
+# at the domain root. Jekyll's built-in default is "".
+baseurl: ""
+
+# Value for <html lang>. Defaults to "en" when unset.
+lang: "en"
+
+# --- Author ------------------------------------------------------------------
+
+# Author name for <meta name="author"> and the JSON-LD Person `name`. Falls
+# back to `title` when unset. No default.
+author:
+  name: "Example Author"
+  # List of profile URLs. Each entry becomes one entry of the JSON-LD `sameAs`
+  # array. Leave empty to omit `sameAs` entirely.
+  social:
+    - "https://example.com/"
+
+# --- Navigation --------------------------------------------------------------
+
+# Rendered by _includes/nav.html, in order. Omit the key or use an empty list
+# to render no navigation at all. Each item needs a `title` and a `url`.
+# `url` must be the path the visitor types, i.e. the *output* path including
+# the .html extension -- the theme compares it against page.url after stripping
+# that extension, so "/about.html" correctly marks /about.html as current.
+nav:
+  - title: "Home"
+    url: "/"
+  - title: "About"
+    url: "/about.html"
+  - title: "Blog"
+    url: "/blogs.html"
+  - title: "Interests"
+    url: "/interests.html"
+  - title: "Tools"
+    url: "/tools.html"
+  - title: "Doing"
+    url: "/doing.html"
+
+# --- Blog --------------------------------------------------------------------
+
+# Path of the blog index page, used by the "back" link at the bottom of every
+# post. Defaults to "/blogs.html".
+blog_url: "/blogs.html"
+
+# Label for that link. Defaults to "Back to Blog".
+back_text: "Back to Blog"
+
+# Date-stamped post URLs. `:title` is the post's `slug` if set, otherwise its
+# slugified `title`. Because the placeholder ends in .html, post permalinks
+# should NOT also append an extension, or you get "foo.html.html".
+permalink: /blogs/:title.html
+
+# --- Footer ------------------------------------------------------------------
+
+footer:
+  # Replaces the whole footer line when set, including the copyright and the
+  # years. Omitted here so the generated line below is shown instead.
+  # text: "Copyright (c) Example"
+  # When set, the auto-generated footer reads
+  # "Copyright (c) <start_year>-Present <author.name>".
+  start_year: 2026
+
+# --- Theme -------------------------------------------------------------------
+
+# Name of the theme gem to use.
+theme: "furgelisherpa-jekyll"
+
+# Every setting below is optional: the theme ships its own defaults, which are
+# merged in automatically. They are left unset (or empty) here on purpose so the
+# defaults are what gets exercised.
+
+# Google Fonts family for the body text. Set to an empty string or false to
+# drop the <link> to Google Fonts entirely. The theme default is
+# "JetBrains Mono".
+google_font: "JetBrains Mono"
+
+# Overrides the bundled stylesheet. The theme default is
+# "/assets/css/style.css"; leave unset to use it.
+# css_path: "/assets/css/style.css"
+
+# Overrides the bundled favicon, with the type= attribute inferred from the
+# extension (.jpg/.jpeg, .png, .svg, .ico, .gif). The theme default is
+# "/assets/favicon.jpg"; leave unset to use it.
+# favicon: "/assets/favicon.jpg"
+
+# Build without a Sass source map, which keeps `_site/assets/css/style.css.map`
+# out of the output. Supported by Jekyll >= 3.7 with Sass >= 1.26.
+sass:
+  sourcemap: never
+
+# Jekyll's own comment. Generated files land in _site/.
+# Set to true to ignore the theme's _config.yml entirely; the theme tolerates
+# this and then falls back to its hard-coded defaults.
+# ignore_theme_config: false

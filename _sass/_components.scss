@@ -1,0 +1,15 @@
+@use "variables";
+
+.linkbox {
+  border: 1px solid variables.$color-black; border-radius: 6px;
+  padding: .6rem .9rem; text-align: center; line-height: 1.8;
+  margin: 0 0 1.25rem;
+}
+.sep { margin: 0 .35rem; }
+
+/* ---- inner pages ---- */
+.meta { color: variables.$color-muted; font-size: .85rem; margin: 0 0 .75rem; }
+.post-list { list-style: none; padding: 0; margin: 0 0 1rem; }
+.post-list li { margin: .5rem 0; }
+.post-list .date { color: variables.$color-muted; margin-right: .6rem; }
+.back { margin-top: 1.5rem; }

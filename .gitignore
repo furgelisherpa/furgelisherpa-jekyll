@@ -1,0 +1,13 @@
+# Build output and dependency state. All patterns are unanchored, so they match
+# at any depth: this covers example_site/ as well as the theme root, including
+# its Gemfile.lock, which a site is not meant to commit either.
+_site/
+.jekyll-cache/
+.sass-cache/
+
+# Packaged gem artifacts. Built with `gem build -o /tmp/...`; never committed.
+*.gem
+
+# Bundler
+.bundle/
+Gemfile.lock

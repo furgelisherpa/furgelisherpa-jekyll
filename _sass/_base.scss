@@ -1,0 +1,13 @@
+@use "variables";
+
+* { box-sizing: border-box; }
+html { font-size: 100%; }
+body {
+  margin: 0; padding: 1rem 1.25rem 2rem;
+  background: variables.$color-white; color: variables.$color-black;
+  font-family: variables.$font-stack;
+  font-size: variables.$font-size-base;               /* about 15px */
+  line-height: 1.55;
+}
+a { color: variables.$color-link; }
+a:visited { color: variables.$color-link-visited; }

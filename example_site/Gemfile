@@ -1,0 +1,7 @@
+# frozen_string_literal: true
+
+source "https://rubygems.org"
+
+# Use the theme from the checkout one directory up. A published site would use
+# `gem "furgelisherpa-jekyll"` with no options instead.
+gem "furgelisherpa-jekyll", path: ".."

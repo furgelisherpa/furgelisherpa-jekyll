@@ -1,0 +1,76 @@
+{%- comment -%}
+  Main navigation, driven entirely by `nav` in the site's _config.yml.
+  Renders nothing at all when `nav` is unset or empty.
+
+  Two details matter for fidelity with the reference markup:
+
+  1. Each item's <span class="sep">|</span> follows the item with *no* space
+     before it, and a newline after it. The nav children are inline, so this
+     is what renders "Home| About| Blog|" rather than "Home | About | Blog |".
+     The markup is therefore assembled in `item_html` and emitted in one go,
+     because whitespace control around a multi-line tag block cannot express
+     "no space before, newline after".
+  2. Jekyll gives an HTML page an extensionless page.url (`/about`) while the
+     nav config uses the real file path (`/about.html`), so both sides are
+     normalized before comparison. hrefs always keep the configured URL.
+
+  Note: Liquid's slice filter yields "" for a negative length, so trailing
+  extensions are stripped with split/first instead of slice.
+{%- endcomment -%}
+{%- if site.nav and site.nav.size > 0 -%}
+{%- assign base = site.baseurl | default: "" -%}
+
+{%- assign current = page.url | default: "" -%}
+{%- if base != "" -%}{%- assign current = current | remove_first: base -%}{%- endif -%}
+{%- if current | size >= 10 -%}
+  {%- assign current_tail = current | slice: -10, 10 -%}
+{%- else -%}
+  {%- assign current_tail = "" -%}
+{%- endif -%}
+{%- if current_tail == "index.html" -%}
+  {%- assign current = "/" -%}
+{%- else -%}
+  {%- assign current_parts = current | split: ".html" -%}
+  {%- assign current = current_parts | first -%}
+{%- endif -%}
+
+<div data-nosnippet>
+  <nav class="linkbox" aria-label="Main">
+    {%- for item in site.nav -%}
+    {%- assign item_url = item.url | default: "" -%}
+    {%- assign target = item_url -%}
+    {%- assign internal = false -%}
+    {%- assign href = item_url -%}
+    {%- if item_url | slice: 0, 1 == "/" -%}
+      {%- assign internal = true -%}
+      {%- assign href = item_url | relative_url -%}
+      {%- assign target = item_url | remove_first: base -%}
+      {%- if target | size >= 10 -%}
+        {%- assign target_tail = target | slice: -10, 10 -%}
+      {%- else -%}
+        {%- assign target_tail = "" -%}
+      {%- endif -%}
+      {%- if target_tail == "index.html" -%}
+        {%- assign target = "/" -%}
+      {%- else -%}
+        {%- assign target_parts = target | split: ".html" -%}
+        {%- assign target = target_parts | first -%}
+      {%- endif -%}
+    {%- endif -%}
+    {%- assign is_current = false -%}
+    {%- if internal and current != "" and target == current -%}
+      {%- assign is_current = true -%}
+    {%- endif -%}
+    {%- if is_current -%}
+      {%- assign item_html = "<strong>" | append: item.title | append: "</strong>" -%}
+    {%- else -%}
+      {%- assign item_html = '<a href="' | append: href | append: '">' | append: item.title | append: "</a>" -%}
+    {%- endif -%}
+    {%- unless forloop.last -%}
+      {%- assign item_html = item_html | append: '<span class="sep">|</span>' -%}
+    {%- endunless %}
+{{ item_html }}
+    {%- endfor %}
+  </nav>
+</div>
+{%- endif -%}

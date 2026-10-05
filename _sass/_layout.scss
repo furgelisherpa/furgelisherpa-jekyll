@@ -1,0 +1,7 @@
+@use "variables";
+
+.page { max-width: variables.$page-max-width; margin: 0 auto; }
+header { text-align: center; margin: 1rem 0 1.5rem; }
+h1 { font-size: 1.5rem; margin: 0 0 .75rem; text-decoration: underline; }
+.tagline { text-align: center; margin: 0 0 1.5rem; }
+footer { margin-top: 2rem; padding-top: .5rem; border-top: 1px solid variables.$color-black; text-align: center; }

@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="{{ page.lang | default: site.lang | default: "en" }}">
+{%- include head.html %}
+<body>
+  <div class="page">
+    {%- include header.html %}
+    {%- if page.tagline %}
+    <p class="tagline">{{ page.tagline }}</p>
+    {%- endif %}
+    {%- include nav.html %}
+    <main>
+      {{ content }}
+    </main>
+    {%- if page.last_updated %}
+    <p class="meta">Last updated: {{ page.last_updated }}</p>
+    {%- endif %}
+    {%- include footer.html %}
+  </div>
+</body>
+</html>

@@ -1,0 +1,10 @@
+---
+layout: default
+---
+{%- if page.date %}
+<p class="meta"><time datetime="{{ page.date | date: "%Y-%m-%d" }}">{{ page.date | date: "%Y-%m-%d" }}</time></p>
+{%- endif %}
+<section id="post">
+{{ content }}
+</section>
+<p class="back"><a href="{{ site.blog_url | default: "/blogs.html" | relative_url }}">{{ site.back_text | default: "Back to Blog" }}</a></p>

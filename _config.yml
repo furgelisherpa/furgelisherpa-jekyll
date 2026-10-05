@@ -1,0 +1,11 @@
+# Theme defaults, merged into every consuming site's configuration
+# (Jekyll >= 4.0). Anything set here can be overridden by the site.
+#
+# Only conservative, code-equivalent defaults live here. There are
+# deliberately no placeholders for title, url, author, description or nav:
+# those are site-specific and leaving them out guarantees a consuming site
+# never inherits dummy values. Every key below matches the `| default:`
+# fallback used in _includes/head.html, so deleting this file changes nothing.
+google_font: "JetBrains Mono"
+css_path: "/assets/css/style.css"
+favicon: "/assets/favicon.jpg"

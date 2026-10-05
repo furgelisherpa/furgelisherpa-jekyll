@@ -1,0 +1,19 @@
+{%- if site.footer.text -%}
+  {%- assign footer_text = site.footer.text -%}
+{%- else -%}
+  {%- assign owner = site.author.name | default: site.title | default: "" -%}
+  {%- assign years = "" -%}
+  {%- if site.footer.start_year -%}
+    {%- assign years = site.footer.start_year | append: "-Present " -%}
+  {%- endif -%}
+  {%- assign footer_text = "Copyright (c)" -%}
+  {%- if owner != "" or years != "" -%}
+    {%- assign footer_text = footer_text | append: " " -%}
+  {%- endif -%}
+  {%- assign footer_text = footer_text | append: years | append: owner | strip -%}
+{%- endif -%}
+<div data-nosnippet>
+  <footer>
+    <small>{{ footer_text | escape }}</small>
+  </footer>
+</div>
